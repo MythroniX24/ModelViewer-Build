@@ -1,0 +1,77 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdk = 36
+    defaultConfig {
+        applicationId "com.dmitrybrant.modelviewer"
+        minSdk = 23
+        targetSdk = 36
+        versionCode = 26
+        multiDexEnabled = true
+
+        ndk {
+            abiFilters 'arm64-v8a'  // Only 64-bit — covers 95%+ of devices, halves .so size
+        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++17 -fvisibility=hidden -ffunction-sections -fdata-sections"
+                arguments "-DANDROID_STL=c++_static",  // Static = no extra .so file
+                          "-DCMAKE_BUILD_TYPE=Release"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+    }
+    kotlin {
+        compilerOptions { jvmTarget = JvmTarget.JVM_17 }
+    }
+    lint { abortOnError false }
+    namespace 'com.dmitrybrant.modelviewer'
+
+    // Remove unused resources/languages to reduce APK size
+    defaultConfig {
+        resConfigs "en"  // Only English strings
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation("androidx.core:core-ktx:1.18.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation 'androidx.activity:activity-ktx:1.13.0'
+    implementation 'androidx.fragment:fragment-ktx:1.8.9'
+    implementation 'com.squareup.okhttp3:okhttp:5.3.2'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
+}

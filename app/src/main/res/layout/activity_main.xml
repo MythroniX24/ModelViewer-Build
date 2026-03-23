@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/containerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWindowBackground">
+
+    <!-- 3D view added at index 0 -->
+
+    <!-- Ruler overlay (transparent, draws line between points) -->
+    <com.dmitrybrant.modelviewer.RulerOverlayView
+        android:id="@+id/rulerOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <ProgressBar android:id="@+id/progressBar"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:padding="16dp" android:layout_gravity="bottom|start"/>
+
+    <TextView android:id="@+id/loadingText"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:paddingStart="72dp" android:paddingBottom="24dp"
+        android:textColor="#FFFFFFFF" android:textSize="13sp" android:textStyle="bold"
+        android:visibility="gone" android:text="Loading…"/>
+
+    <!-- Ruler info card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/rulerInfoCard"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="72dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#CC1A2E1A"
+        app:cardCornerRadius="16dp" app:cardElevation="6dp">
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="12dp" android:gravity="center">
+            <TextView android:id="@+id/rulerStatusText"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="#AAFFAA" android:textSize="13sp" android:text="Tap first point"/>
+            <TextView android:id="@+id/rulerDistanceText"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Dimension bar -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/dimensionInfoCard"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="72dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#CC1A1A2E"
+        app:cardCornerRadius="20dp" app:cardElevation="4dp">
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="14dp" android:paddingEnd="14dp"
+            android:paddingTop="7dp" android:paddingBottom="7dp"
+            android:gravity="center_vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="X" android:textColor="#9575CD" android:textSize="11sp" android:textStyle="bold" android:layout_marginEnd="3dp"/>
+            <TextView android:id="@+id/textDimX" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="—" android:textColor="#FFFFFFFF" android:textSize="13sp" android:textStyle="bold"/>
+            <View android:layout_width="1dp" android:layout_height="16dp" android:background="#44FFFFFF" android:layout_marginStart="10dp" android:layout_marginEnd="10dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Y" android:textColor="#4DB6AC" android:textSize="11sp" android:textStyle="bold" android:layout_marginEnd="3dp"/>
+            <TextView android:id="@+id/textDimY" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="—" android:textColor="#FFFFFFFF" android:textSize="13sp" android:textStyle="bold"/>
+            <View android:layout_width="1dp" android:layout_height="16dp" android:background="#44FFFFFF" android:layout_marginStart="10dp" android:layout_marginEnd="10dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Z" android:textColor="#EF9A9A" android:textSize="11sp" android:textStyle="bold" android:layout_marginEnd="3dp"/>
+            <TextView android:id="@+id/textDimZ" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="—" android:textColor="#FFFFFFFF" android:textSize="13sp" android:textStyle="bold"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="mm" android:textColor="#88FFFFFF" android:textSize="11sp" android:layout_marginStart="4dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Reset view button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/resetViewButton"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp" android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:backgroundTint="#CC3F51B5"
+        app:tint="@android:color/white" app:fabSize="mini"
+        android:contentDescription="Reset view"
+        app:srcCompat="@drawable/ic_reset_view"/>
+
+    <!-- Toolbar -->
+    <FrameLayout android:id="@+id/mainToolbarContainer"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@color/colorPrimary" android:layout_gravity="top">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </FrameLayout>
+
+</FrameLayout>
